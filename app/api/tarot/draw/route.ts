@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const { question, theme, cardCount = 3 } = await req.json()
 
     if (!question || question.trim().length < 5) {
-      return NextResponse.json({ error: '質問を5文字以上入力してください' }, { status: 400 })
+      return NextResponse.json({ error: "質問を5文字以上入力してください" }, { status: 400 })
     }
 
     const drawnCards = drawCards(cardCount)
@@ -21,8 +21,12 @@ export async function POST(req: NextRequest) {
       actionAdvice: result.actionAdvice,
       imagePrompt: result.imagePrompt,
     })
-  } catch (err) {
-    console.error('[tarot/draw]', err)
-    return NextResponse.json({ error: '鑑定中にエラーが発生しました。もう一度お試しください。' }, { status: 500 })
+  } catch (err: unknown) {
+    console.error("[tarot/draw] Error:", err)
+
+    const errorMessage =
+      err instanceof Error ? err.message : "鑑定中にエラーが発生しました。もう一度お試しください。"
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
