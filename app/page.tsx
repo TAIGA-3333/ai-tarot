@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { useTarot } from '@/hooks/useTarot'
 import QuestionForm from '@/components/tarot/QuestionForm'
@@ -7,9 +8,15 @@ import CardReveal from '@/components/tarot/CardReveal'
 import ReadingResult from '@/components/tarot/ReadingResult'
 import StarField from '@/components/ui/StarField'
 import LimitBanner from '@/components/ui/LimitBanner'
+import { trackEvent } from '@/lib/track'
 
 export default function Home() {
   const { step, reading, error, isPremium, limitReached, submit, reset } = useTarot()
+
+  useEffect(() => {
+    // ?src=（動画/シェア等の流入元）を捕捉してページビューを記録
+    trackEvent('page_view')
+  }, [])
 
   return (
     <main className="relative min-h-screen overflow-hidden">

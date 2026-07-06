@@ -2,6 +2,8 @@
 
 import { TarotReading } from '@/types'
 import ShareButton from '@/components/ui/ShareButton'
+import LineCTA from '@/components/ui/LineCTA'
+import VerniCTA from '@/components/ui/VerniCTA'
 
 interface Props {
   reading: TarotReading
@@ -76,6 +78,15 @@ export default function ReadingResult({ reading, onReset }: Props) {
           </p>
         </div>
       </details>
+
+      {/* 収益導線: 単一CTA（毎朝のLINEメッセージ）+ ヴェルニ枠（登録待ちは非表示） */}
+      <div className="space-y-3 pt-2">
+        <LineCTA omenName={reading.drawnCards[0]?.card.nameJa} />
+        <p className="text-center text-purple-400/40 text-xs">
+          月詠があなたのために選んだ守護のメッセージを、毎朝届けます
+        </p>
+        <VerniCTA />
+      </div>
 
       {/* シェア & リセット */}
       <div className="flex flex-col sm:flex-row gap-3">
