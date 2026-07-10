@@ -10,7 +10,7 @@ interface Props {
   searchParams: Promise<{ omen?: string; msg?: string }>
 }
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-tarot-green.vercel.app'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://kaiun-oracle.vercel.app'
 
 function resolveOmen(omenId: string | undefined): Omen {
   return omensData.find((o) => o.id === omenId) || omensData[0]

@@ -9,7 +9,7 @@ import { trackEvent } from '@/lib/track'
 type Omen = (typeof omensData)[0]
 type Step = 'input' | 'drawing' | 'result'
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-tarot-green.vercel.app'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://kaiun-oracle.vercel.app'
 const LINE_URL = 'https://line.me/R/ti/p/@101ebuku'
 // ヴェルニアフィリエイトURL（2026-07-08 実URLに差し替え）
 const VERNIER_URL = 'https://afi2.vernis.co.jp/r/19du5r2'

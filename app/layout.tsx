@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://ai-tarot-green.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://kaiun-oracle.vercel.app'),
   title: '開運オラクル — 今日のスピリチュアルメッセージ',
   description: '龍神・招き猫・鳳凰…あなたを選んだ縁起物が、今日の開運メッセージを届けます。登録不要・15秒で結果。LINEで毎朝のご縁を受け取って。',
   keywords: ['開運', '今日の運勢', 'スピリチュアル', '龍神', '招き猫', '縁起物', '開運メッセージ', '無料占い', '金運', '恋愛運'],
