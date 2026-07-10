@@ -1,20 +1,21 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
 import omensData from '@/lib/omens.json'
+import { readFile } from 'fs/promises'
+import path from 'path'
 
-export const runtime = 'edge'
+// Edge RuntimeはVercel Hobbyプランのバンドルサイズ上限(1MB)に収まらないため
+// Node.js runtimeで実行する（@vercel/ogはNode runtimeでも動作する）。
+export const runtime = 'nodejs'
 
 // U1: @vercel/og はデフォルトだと日本語グリフを描画するために Google Fonts へ
 // 実行時に動的フェッチする（fonts.gstatic.com 等）。本番Vercel edgeでは疎通するが、
 // 閉域/オフライン環境では "Failed to load dynamic font" で画像生成ごと失敗する。
 // そのため使用文字を含むサブセットフォントをリポジトリに同梱し、ローカル読込に切り替える
 // （satoriの自動フォント探索を無効化し、常に決定的にレンダリングされるようにする）。
-const fontRegular = fetch(new URL('../../../../assets/fonts/NotoSansJP-Regular.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
-)
-const fontBold = fetch(new URL('../../../../assets/fonts/NotoSansJP-Bold.ttf', import.meta.url)).then((res) =>
-  res.arrayBuffer()
-)
+// Node.js runtimeではfetch(new URL(...))によるローカルファイル読込が使えないためfsを使う。
+const fontRegular = readFile(path.join(process.cwd(), 'assets/fonts/NotoSansJP-Regular.ttf'))
+const fontBold = readFile(path.join(process.cwd(), 'assets/fonts/NotoSansJP-Bold.ttf'))
 
 export async function GET(req: NextRequest) {
   try {
