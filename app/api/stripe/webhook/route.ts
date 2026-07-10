@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
+import { getSupabaseAdmin, setPremiumEntitlement } from '@/lib/supabaseAdmin'
 
 // Next.js App RouterでStripe webhookを受け取るにはbodyParserを切る必要がある
 export const runtime = 'nodejs'
@@ -24,11 +25,18 @@ export async function POST(req: NextRequest) {
   // サブスクリプション開始イベント
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
-    if (session.mode === 'subscription' && session.payment_status === 'paid') {
+    if ((session.mode === 'subscription' || session.mode === 'payment') && session.payment_status === 'paid') {
       const clientSessionId = session.metadata?.clientSessionId
       console.log(`[webhook] プレミアム付与: sessionId=${clientSessionId}, stripeCustomer=${session.customer}`)
-      // Supabase未使用のため、ここではログのみ
-      // 実際のプレミアム付与はフロント側でsuccess_urlのsession_idを使って確認
+      if (clientSessionId) {
+        await setPremiumEntitlement({
+          clientSessionId,
+          stripeCustomerId: typeof session.customer === 'string' ? session.customer : null,
+          stripeSubscriptionId: typeof session.subscription === 'string' ? session.subscription : null,
+          isPremium: true,
+          source: session.mode === 'payment' ? 'stripe_single_payment_webhook' : 'stripe_webhook',
+        })
+      }
     }
   }
 
@@ -36,6 +44,19 @@ export async function POST(req: NextRequest) {
   if (event.type === 'customer.subscription.deleted') {
     const subscription = event.data.object as Stripe.Subscription
     console.log(`[webhook] サブスク終了: ${subscription.id}`)
+    const supabase = getSupabaseAdmin()
+    const { error } = await supabase
+      .from('premium_entitlements')
+      .update({
+        is_premium: false,
+        source: 'stripe_subscription_deleted',
+        updated_at: new Date().toISOString(),
+      })
+      .eq('stripe_subscription_id', subscription.id)
+
+    if (error) {
+      console.error('[webhook] プレミアム解除失敗:', error)
+    }
   }
 
   return NextResponse.json({ received: true })

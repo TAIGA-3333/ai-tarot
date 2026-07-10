@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { TarotReading } from '@/types'
 import { getReadings } from '@/lib/storage'
 import StarField from '@/components/ui/StarField'
+import LineCtaButton from '@/components/ui/LineCtaButton'
 
 function formatDate(iso: string): string {
   const d = new Date(iso)
@@ -12,12 +13,8 @@ function formatDate(iso: string): string {
 }
 
 export default function HistoryPage() {
-  const [readings, setReadings] = useState<TarotReading[]>([])
+  const [readings] = useState<TarotReading[]>(() => getReadings())
   const [expanded, setExpanded] = useState<string | null>(null)
-
-  useEffect(() => {
-    setReadings(getReadings())
-  }, [])
 
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -86,6 +83,11 @@ export default function HistoryPage() {
             ))}
           </div>
         )}
+
+        {/* U0: LINE単一CTA + クリック計測 */}
+        <div className="mt-10">
+          <LineCtaButton label="line_cta" />
+        </div>
       </div>
     </main>
   )

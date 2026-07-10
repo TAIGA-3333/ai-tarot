@@ -2,12 +2,21 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '月詠タロット — AIが導く、あなたの運命',
-  description: 'AIタロット占いで、恋愛・仕事・人間関係の悩みに答えを。神秘の月詠占い師があなたの未来を照らします。',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://ai-tarot-green.vercel.app'),
+  title: '開運オラクル — 今日のスピリチュアルメッセージ',
+  description: '龍神・招き猫・鳳凰…あなたを選んだ縁起物が、今日の開運メッセージを届けます。登録不要・15秒で結果。LINEで毎朝のご縁を受け取って。',
+  keywords: ['開運', '今日の運勢', 'スピリチュアル', '龍神', '招き猫', '縁起物', '開運メッセージ', '無料占い', '金運', '恋愛運'],
   openGraph: {
-    title: '月詠タロット — AIが導く、あなたの運命',
-    description: 'AIタロット占いで、恋愛・仕事・人間関係の悩みに答えを。',
+    title: '開運オラクル — 龍神があなたを選びました',
+    description: '今日あなたを選んだ縁起物が、スピリチュアルメッセージを届けます。登録不要・15秒。',
     type: 'website',
+    images: ['/api/og/result'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '開運オラクル — 龍神があなたを選びました',
+    description: '今日あなたを選んだ縁起物が、スピリチュアルメッセージを届けます。登録不要・15秒。',
+    images: ['/api/og/result'],
   },
 }
 

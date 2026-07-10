@@ -4,7 +4,9 @@ import { useEffect, useState, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import StarField from '@/components/ui/StarField'
+import LineCtaButton from '@/components/ui/LineCtaButton'
 import { setIsPremium, getIsPremium } from '@/lib/storage'
+import { getClientSessionId } from '@/lib/clientSession'
 
 const FEATURES = [
   { icon: '✦', title: '無制限の鑑定', desc: '1日何度でもタロットを引けます' },
@@ -15,14 +17,15 @@ const FEATURES = [
 
 export default function UpgradePage() {
   const searchParams = useSearchParams()
-  const [isPremium, setIsPremiumState] = useState(false)
+  const [isPremium, setIsPremiumState] = useState(() => getIsPremium())
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState<'idle' | 'success' | 'canceled'>('idle')
 
   // 決済成功後のリダイレクト処理
   const verifySession = useCallback(async (sessionId: string) => {
     try {
-      const res = await fetch(`/api/stripe/verify?session_id=${sessionId}`)
+      const clientSessionId = getClientSessionId()
+      const res = await fetch(`/api/stripe/verify?session_id=${sessionId}&client_session_id=${clientSessionId}`)
       const data = await res.json()
       if (data.isPremium) {
         setIsPremium(true)
@@ -35,26 +38,26 @@ export default function UpgradePage() {
   }, [])
 
   useEffect(() => {
-    setIsPremiumState(getIsPremium())
-
     const success = searchParams.get('success')
     const canceled = searchParams.get('canceled')
     const sessionId = searchParams.get('session_id')
 
     if (success === '1' && sessionId) {
-      verifySession(sessionId)
+      const t = setTimeout(() => verifySession(sessionId), 0)
+      return () => clearTimeout(t)
     } else if (canceled === '1') {
-      setStatus('canceled')
+      const t = setTimeout(() => setStatus('canceled'), 0)
+      return () => clearTimeout(t)
     }
   }, [searchParams, verifySession])
 
-  const handleCheckout = async () => {
+  const handleCheckout = async (plan: 'premium' | 'premium_plus' | 'single' = 'premium') => {
     setIsLoading(true)
     try {
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId: crypto.randomUUID() }),
+        body: JSON.stringify({ sessionId: getClientSessionId(), plan }),
       })
       const data = await res.json()
       if (data.url) {
@@ -101,6 +104,15 @@ export default function UpgradePage() {
           </p>
         </div>
 
+        {/* U0: LINE単一CTA + クリック計測（無料の代替導線） */}
+        <div className="mb-8">
+          <LineCtaButton
+            label="line_cta"
+            title="まずは無料でLINE登録から"
+            description="課金の前に、毎朝届く無料の開運メッセージを試してみませんか。"
+          />
+        </div>
+
         {/* 価格カード */}
         <div className="rounded-2xl border border-amber-400/40 bg-gradient-to-b from-purple-950/80 to-black/60 p-8 mb-6 text-center shadow-[0_0_40px_rgba(201,168,76,0.2)]">
           <div className="text-5xl font-bold text-amber-300 mb-1">¥490</div>
@@ -112,7 +124,7 @@ export default function UpgradePage() {
             </div>
           ) : (
             <button
-              onClick={handleCheckout}
+              onClick={() => handleCheckout('premium')}
               disabled={isLoading}
               className="
                 w-full py-5 rounded-2xl font-bold text-lg tracking-wider
@@ -136,6 +148,25 @@ export default function UpgradePage() {
           )}
 
           <p className="text-purple-400/40 text-xs mt-3">いつでもキャンセル可能 · SSL暗号化通信</p>
+        </div>
+
+        <div className="grid gap-3 mb-8 sm:grid-cols-2">
+          <button
+            onClick={() => handleCheckout('single')}
+            disabled={isLoading || isPremium}
+            className="rounded-2xl border border-purple-500/25 bg-purple-950/30 p-4 text-left transition-colors hover:border-purple-300/50 disabled:opacity-50"
+          >
+            <p className="text-sm font-bold text-purple-100">単発鑑定 ¥100</p>
+            <p className="mt-1 text-xs leading-5 text-purple-300/60">月額が不安な人向けの都度課金オプション</p>
+          </button>
+          <button
+            onClick={() => handleCheckout('premium_plus')}
+            disabled={isLoading || isPremium}
+            className="rounded-2xl border border-amber-400/25 bg-amber-950/20 p-4 text-left transition-colors hover:border-amber-300/50 disabled:opacity-50"
+          >
+            <p className="text-sm font-bold text-amber-200">上位プラン ¥980</p>
+            <p className="mt-1 text-xs leading-5 text-amber-100/60">5枚展開・相性占い追加の価格テスト枠</p>
+          </button>
         </div>
 
         {/* 機能一覧 */}

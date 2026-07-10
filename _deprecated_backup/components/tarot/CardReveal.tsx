@@ -21,8 +21,8 @@ export default function CardReveal({ drawnCards }: Props) {
   useEffect(() => {
     if (phase !== 'revealing') return
     if (revealedCount >= drawnCards.length) {
-      setPhase('done')
-      return
+      const doneTimer = setTimeout(() => setPhase('done'), 0)
+      return () => clearTimeout(doneTimer)
     }
     const t = setTimeout(() => setRevealedCount(n => n + 1), 750)
     return () => clearTimeout(t)

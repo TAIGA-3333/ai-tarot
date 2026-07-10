@@ -77,6 +77,29 @@ export default function ReadingResult({ reading, onReset }: Props) {
         </div>
       </details>
 
+      {/* LINE CTA */}
+      <div className="rounded-2xl bg-gradient-to-r from-amber-900/40 via-amber-600/20 to-amber-900/40 border border-amber-500/30 p-6 text-center shadow-[0_0_30px_rgba(217,119,6,0.1)]">
+        <h3 className="text-amber-200 text-sm font-bold mb-2 tracking-wider">＼ もっと詳しく知りたい方へ ／</h3>
+        <p className="text-amber-100/70 text-xs mb-4 leading-relaxed">
+          公式LINE登録で、あなただけの<br />
+          「個別深層鑑定」と「開運ガイド」を無料で受け取れます。
+        </p>
+        <a 
+          href="https://line.me/R/ti/p/@101ebuku" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="
+            inline-flex items-center gap-2 px-8 py-3 rounded-full
+            bg-gradient-to-r from-amber-500 to-amber-600
+            text-white text-sm font-bold shadow-lg
+            hover:scale-105 transition-transform duration-300
+          "
+        >
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" className="w-4 h-4 invert" />
+          無料で個別鑑定を受ける
+        </a>
+      </div>
+
       {/* シェア & リセット */}
       <div className="flex flex-col sm:flex-row gap-3">
         <ShareButton reading={reading} />

@@ -14,9 +14,36 @@ function today(): string {
 // ---- 鑑定履歴 ----
 export function saveReading(reading: TarotReading): TarotReading {
   const all = getReadings()
-  const saved = { ...reading, id: crypto.randomUUID(), createdAt: new Date().toISOString() }
+  const saved = { ...reading, id: reading.id || crypto.randomUUID(), createdAt: reading.createdAt || new Date().toISOString() }
   localStorage.setItem(KEYS.READINGS, JSON.stringify([saved, ...all].slice(0, 50)))
   return saved
+}
+
+export async function syncReadingToServer(reading: TarotReading, clientSessionId: string) {
+  try {
+    await fetch('/api/readings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clientSessionId, reading }),
+    })
+  } catch (e) {
+    console.error('Failed to sync reading to server:', e)
+  }
+}
+
+export async function fetchReadingsFromServer(clientSessionId: string): Promise<TarotReading[]> {
+  try {
+    const res = await fetch(`/api/readings?client_session_id=${clientSessionId}`)
+    const data = await res.json()
+    if (data.readings) {
+      // ローカルとマージして保存
+      localStorage.setItem(KEYS.READINGS, JSON.stringify(data.readings))
+      return data.readings
+    }
+  } catch (e) {
+    console.error('Failed to fetch readings from server:', e)
+  }
+  return getReadings()
 }
 
 export function getReadings(): TarotReading[] {

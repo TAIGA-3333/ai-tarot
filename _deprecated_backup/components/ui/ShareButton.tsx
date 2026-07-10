@@ -9,8 +9,11 @@ interface Props {
 export default function ShareButton({ reading }: Props) {
   const handleShare = () => {
     const cardNames = reading.drawnCards.map(d => d.card.nameJa).join('・')
+    const firstCard = reading.drawnCards[0]?.card.nameJa || '月の導き'
+    const appUrl = window.location.origin
+    const shareUrl = `${appUrl}/fortune/today?card=${encodeURIComponent(firstCard)}`
     const text = `🌙 月詠タロットで占いました\n\n【テーマ】${reading.theme}\n【引いたカード】${cardNames}\n【ラッキーカラー】${reading.luckyColor}\n\n#月詠タロット #AIタロット #タロット占い`
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`
     window.open(url, '_blank', 'noopener,noreferrer,width=550,height=420')
   }
 
