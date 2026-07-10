@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import StarField from '@/components/ui/StarField'
 import omensData from '@/lib/omens.json'
+import { trackEvent } from '@/lib/track'
 
 type Omen = (typeof omensData)[0]
 type Step = 'input' | 'drawing' | 'result'
@@ -99,6 +100,11 @@ export default function Home() {
   const tweetText = omen
     ? `🌟 開運オラクルで「${omen.nameJa}」が降臨しました✨\n\n「${message.slice(0, 40)}…」\n\n#開運 #スピリチュアル #龍神`
     : ''
+
+  useEffect(() => {
+    // ?src=（動画/シェア等の流入元）を捕捉してページビューを記録
+    trackEvent('page_view')
+  }, [])
 
   return (
     <main className="relative min-h-screen overflow-hidden">

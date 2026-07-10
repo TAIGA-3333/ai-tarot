@@ -1,4 +1,4 @@
-/**
+﻿/**
  * lib/gemini.ts - AI provider: Groq (free) -> Gemini (fallback)
  * GROQ_API_KEY   : console.groq.com (free, 14400 req/day)
  * GEMINI_API_KEY : aistudio.google.com (fallback, optional)
@@ -84,7 +84,7 @@ async function generateWithGemini(
 ): Promise<TarotReadingResult> {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '')
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-2.5-flash',
     generationConfig: { responseMimeType: 'application/json' },
   })
   const prompt = `${FORTUNE_TELLER_SYSTEM}\n\n${buildPrompt(question, theme, drawnCards)}`
