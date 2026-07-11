@@ -4,12 +4,13 @@ import { trackEvent } from '@/lib/track'
 
 /**
  * ヴェルニ アフィリエイト枠。
- * 登録待ちのため NEXT_PUBLIC_VERNI_URL 未設定時は何も描画しない
- * （導線はLINE単一CTAのみに絞る）。登録後にVercel環境変数を設定するだけで
- * コード変更なしに有効化できる。
+ * 2026-07-11: オーナーのヴェルニ登録完了に伴い実アフィリURLを既定値として有効化
+ * （LINEステップ3通目と同一URL）。NEXT_PUBLIC_VERNI_URL を設定すれば上書きできる。
  */
+const DEFAULT_VERNI_URL = 'https://afi2.vernis.co.jp/r/19du5r2'
+
 export default function VerniCTA() {
-  const verniUrl = process.env.NEXT_PUBLIC_VERNI_URL
+  const verniUrl = process.env.NEXT_PUBLIC_VERNI_URL || DEFAULT_VERNI_URL
   if (!verniUrl) return null
 
   const handleClick = () => {
