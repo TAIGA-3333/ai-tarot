@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>利用規約 — 開運メッセージ配信ツール</title>
+<style>
+  :root {
+    --ink: #1e1b24;
+    --paper: #eeebe4;
+    --paper-raised: #f7f5f0;
+    --accent: #8b5e34;
+    --accent-soft: #c9a876;
+    --line: #dbd5c9;
+    --muted: #6b6558;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ece8e0;
+      --paper: #17151c;
+      --paper-raised: #1e1b25;
+      --accent: #d8ad73;
+      --accent-soft: #967246;
+      --line: #322f3a;
+      --muted: #9b9488;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #ece8e0;
+    --paper: #17151c;
+    --paper-raised: #1e1b25;
+    --accent: #d8ad73;
+    --accent-soft: #967246;
+    --line: #322f3a;
+    --muted: #9b9488;
+  }
+  :root[data-theme="light"] {
+    --ink: #1e1b24;
+    --paper: #eeebe4;
+    --paper-raised: #f7f5f0;
+    --accent: #8b5e34;
+    --accent-soft: #c9a876;
+    --line: #dbd5c9;
+    --muted: #6b6558;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 5rem 1.5rem 6rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .sheet { max-width: 700px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: Georgia, "Hiragino Mincho ProN", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.9rem;
+  }
+
+  h1 {
+    font-family: Georgia, "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-weight: 500;
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    line-height: 1.35;
+    margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+
+  .meta {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 2.6rem;
+  }
+
+  hr.rule { border: none; border-top: 1px solid var(--line); margin: 0 0 2.6rem; }
+
+  section { margin-bottom: 2.4rem; }
+
+  h2 {
+    font-family: Georgia, "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-weight: 500;
+    font-size: 1.18rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    margin: 0 0 0.85rem;
+  }
+
+  h2 .num {
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+  }
+
+  p, li { font-size: 0.98rem; color: var(--ink); }
+  p { margin: 0 0 0.9rem; max-width: 62ch; }
+  ul { margin: 0 0 0.9rem; padding-left: 1.3rem; }
+  li { margin-bottom: 0.4rem; max-width: 60ch; }
+
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1.1rem 1.3rem;
+    margin: 0 0 0.9rem;
+  }
+  .card p:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 600; }
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <p class="eyebrow">Terms of Service</p>
+  <h1>利用規約</h1>
+  <p class="meta">制定日: 2026年7月18日</p>
+  <hr class="rule" />
+
+  <section>
+    <h2><span class="num">第1条</span>本規約の適用</h2>
+    <p>
+      本規約は、開運メッセージ配信ツール（以下「本ツール」）の運営・利用に関する条件を定めるものです。
+      本ツールは、運営者本人が保有する短編動画コンテンツ（開運・前向きなメッセージを扱う動画）を、
+      TikTok を含む各種プラットフォームの公式 API を通じて、運営者自身のアカウントへ自動投稿するための
+      個人運用ツールです。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">第2条</span>サービスの性質</h2>
+    <div class="card">
+      <p>
+        本ツールは<strong>不特定多数のユーザーが利用する公開サービスではありません</strong>。
+        アカウント登録・ログイン機能・第三者向けの利用申込窓口は存在せず、運営者本人のみが
+        自身のプラットフォームアカウントに対して使用します。
+      </p>
+    </div>
+    <ul>
+      <li>投稿対象は運営者本人が保有・管理する SNS アカウントに限られます。</li>
+      <li>本ツールを通じて第三者のアカウントを操作することはありません。</li>
+      <li>投稿コンテンツはあらかじめ運営者が作成・審査した動画・キャプションのみです。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="num">第3条</span>投稿コンテンツの取り扱い</h2>
+    <p>
+      本ツールが投稿する動画は、運営者が作成した開運・スピリチュアル系の前向きなメッセージ動画です。
+      各プラットフォームのコミュニティガイドライン・コンテンツポリシーを遵守した内容のみを投稿します。
+      著作権を侵害するコンテンツ、誤解を招く医療・金融上の助言、他者を害する表現は投稿しません。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">第4条</span>プラットフォーム規約の遵守</h2>
+    <p>
+      本ツールは TikTok 等の公式 Developer Program の利用規約およびコンテンツ共有ガイドラインに従って
+      動作します。各プラットフォームの規約変更があった場合、本ツールの動作もこれに準拠するよう
+      随時見直します。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">第5条</span>免責事項</h2>
+    <p>
+      本ツールは運営者個人の私的利用を目的として開発されたものであり、第三者への提供・保証は
+      行いません。プラットフォーム側の仕様変更、通信障害等により投稿が意図通りに完了しない場合が
+      ありますが、これによって生じた損害について運営者は責任を負いません。
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="num">第6条</span>規約の変更</h2>
+    <p>
+      本規約は、本ツールの機能追加・プラットフォーム側の規約改定等に応じて、予告なく改定される
+      ことがあります。改定後の内容は本ページに継続して掲載します。
+    </p>
+  </section>
+
+  <footer>
+    <span>© 2026 開運メッセージ配信ツール運営者</span>
+    <span><a href="/privacy.html">プライバシーポリシー</a></span>
+  </footer>
+</div>
+</body>
+</html>
