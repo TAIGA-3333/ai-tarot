@@ -102,8 +102,9 @@ export async function GET(req: NextRequest) {
     )
   }
 
-  const clientKey = process.env.TIKTOK_CLIENT_KEY
-  const clientSecret = process.env.TIKTOK_CLIENT_SECRET
+  // Vercel環境変数のコピペミス(先頭・末尾の空白や改行混入)を吸収するため必ずtrimする
+  const clientKey = process.env.TIKTOK_CLIENT_KEY?.trim()
+  const clientSecret = process.env.TIKTOK_CLIENT_SECRET?.trim()
 
   if (!clientKey || !clientSecret) {
     return renderPage(

@@ -9,7 +9,8 @@ const REDIRECT_URI = 'https://kaiun-oracle.vercel.app/api/tiktok/callback'
 const SCOPES = 'user.info.basic,video.publish'
 
 export async function GET() {
-  const clientKey = process.env.TIKTOK_CLIENT_KEY
+  // Vercel環境変数のコピペミス(先頭・末尾の空白や改行混入)を吸収するため必ずtrimする
+  const clientKey = process.env.TIKTOK_CLIENT_KEY?.trim()
 
   if (!clientKey) {
     return NextResponse.json(
