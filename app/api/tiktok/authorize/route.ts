@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server'
 import { randomBytes } from 'crypto'
+import { TIKTOK_REDIRECT_URI } from '@/lib/tiktok-callback'
 
 // TikTok Developer審査用デモ: OAuth認可フローの開始エンドポイント。
 // ランダムなstate値を発行してhttpOnly cookieに保存し(CSRF対策)、
 // TikTokの認可画面へリダイレクトする。
-
-const REDIRECT_URI = 'https://kaiun-oracle.vercel.app/api/tiktok/callback'
+//
+// 注意: TikTok Developer Console側の審査提出フォームの制約により、
+// Redirect URIは現在アプリのルートパス(https://kaiun-oracle.vercel.app/)に
+// 登録されたままになっている(コンソール側を変更できない)。そのため、ここで送る
+// redirect_uriもコンソールの登録値に合わせてルートパスにしている。
+// 実際のコールバック処理は app/page.tsx が担う(lib/tiktok-callback.ts参照)。
 const SCOPES = 'user.info.basic,video.publish'
 
 export async function GET() {
@@ -25,7 +30,7 @@ export async function GET() {
   authorizeUrl.searchParams.set('client_key', clientKey)
   authorizeUrl.searchParams.set('scope', SCOPES)
   authorizeUrl.searchParams.set('response_type', 'code')
-  authorizeUrl.searchParams.set('redirect_uri', REDIRECT_URI)
+  authorizeUrl.searchParams.set('redirect_uri', TIKTOK_REDIRECT_URI)
   authorizeUrl.searchParams.set('state', state)
 
   const response = NextResponse.redirect(authorizeUrl.toString(), 302)
