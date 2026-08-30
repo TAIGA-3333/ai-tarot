@@ -313,7 +313,7 @@ export default function HomeClient() {
                 onClick={() => trackClick('vernier_cta')}
                 className="text-amber-400/70 text-xs hover:text-amber-300 underline underline-offset-2 transition-colors"
               >
-                → プロの占い師による本格鑑定はこちら（初回無料あり）
+                → プロの鑑定士に相談できる電話占いヴェルニはこちら
               </a>
             </div>
 

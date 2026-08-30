@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# codex-build の作業フォルダ（指示書・実行ログ。成果物ではないのでコミットしない）
+.codex_build/

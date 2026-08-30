@@ -30,7 +30,7 @@ export default function VerniCTA() {
         transition-all duration-300
       "
     >
-      ✦ もっと詳しく知りたい方へ（初回無料の本格鑑定）
+      ✦ もっと詳しく知りたい方へ（プロの鑑定士に相談）
     </a>
   )
 }
